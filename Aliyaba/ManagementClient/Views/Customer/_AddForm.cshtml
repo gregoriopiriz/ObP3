@@ -1,0 +1,51 @@
+﻿@{ Layout = null;}
+@model Common.DTOs.DTO_Customer
+
+@using (Html.BeginForm("AddCustomer", "Customer"))
+{
+    @Html.LabelFor(model => model.UserName, "Nombre de Usuario")
+    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Surname, "Apellido")
+    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.DocumentTypeName, "Tipo de Documento")
+    @Html.DropDownListFor(model => model.DocumentTypeName, (ICollection<SelectListItem>)ViewBag.DocumentTypes, "-- Tipo de Documento --", new { @class = "input form-control bg-secondary text-light" })
+    @Html.LabelFor(model => model.Document, "Documento")
+    @Html.EditorFor(model => model.Document, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.PhoneNumber, "Número de Teléfono")
+    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Email, "Email")
+    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Password, "Contraseña")
+    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    <button class="btn btn-primary mt-3" type="submit" id="btn_Validar" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>

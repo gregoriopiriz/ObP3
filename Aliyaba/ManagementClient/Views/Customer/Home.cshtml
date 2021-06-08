@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+@model Common.DTOs.DTO_Customer
+
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <table class="table table-borderless table-hover">
+                    <thead class="border-bottom border-secondary">
+                        <tr>
+                            <th class="text-primary">
+                                <h4>
+                                    Nombre
+                                </h4>
+                            </th>
+                            <th class="float-right"><button class="shadow btn btn-primary" data-toggle="modal" data-target="#AddCustomerModal"><i class="fas fa-plus mr-1"></i>Agregar</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (Common.DTOs.DTO_Customer C in ViewBag.Customers)
+                            {
+                                                <tr>
+                                                    <td>@C.UserName</td>
+                                                    <td>@C.Name</td>
+                                                    <td>@C.Surname</td>
+                                                    <td>@C.Document</td>
+                                                    <td>@C.DocumentTypeName</td>
+                                                    <td>@C.PhoneNumber</td>
+                                                    <td>@C.Email</td>
+                                                    <td>@C.Password</td>
+                                                    <td>
+                                                        <div class="float-right">
+                                                            <button href="@Url.Action("Home", "Customer", new { ID = @C.UserName})" class="shadow btn btn-outline-info"><i class="fas fa-pen"></i></button>
+                                                            <a href="@Url.Action("DeleteCustomer", "Customer", new { ID = @C.UserName})">
+                                                                <button class="shadow ml-2 btn btn-outline-danger" data-toggle="modal" data-target="#ComfirmCustomerDeleteModal">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddCustomerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar un Cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddCustomer", "Customer"))
+                    {
+                        @Html.LabelFor(model => model.Name, "Nombre")
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                        <button class="btn btn-primary mt-3">Agregar</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

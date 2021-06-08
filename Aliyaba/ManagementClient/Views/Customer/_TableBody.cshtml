@@ -1,0 +1,54 @@
+﻿@{ Layout = null; }
+@model Common.DTOs.DTO_Customer
+@{
+    foreach (Common.DTOs.DTO_Customer C in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-username="@C.UserName" data-name="@C.Name" data-surname="@C.Surname" data-documenttype="@C.DocumentTypeName" data-document="@C.Document" data-phone="@C.PhoneNumber"data-email="@C.Email"></div>
+    }
+}
+
+<table id="table" data-classes="table table-hover table-borderless"></table>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.UserName = $(this).data("username");
+        dd.Name = $(this).data("name");
+        dd.Surname = $(this).data("surname");
+        dd.DocumentTypeName = $(this).data("documenttype");
+        dd.Document = $(this).data("document");
+        dd.PhoneNumber = $(this).data("phone");
+        dd.Email = $(this).data("email");
+        dat.push(dd)
+    })
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [{
+            field: 'UserName',
+            title: 'Usuario'
+        }, {
+            field: 'Name',
+            title: 'Nombre'
+        }, {
+            field: 'Surname',
+            title: 'Apellido'
+        }, {
+            field: 'DocumentTypeName',
+            title: 'Tipo de Documento'
+        }, {
+            field: 'Document',
+            title: 'Número de Documento'
+        }, {
+            field: 'PhoneNumber',
+            title: 'teléfono'
+        }, {
+            field: 'Email',
+            title: 'Email'
+        }],
+        data: dat
+    })
+</script>

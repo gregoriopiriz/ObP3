@@ -1,0 +1,80 @@
+﻿
+
+@{ Layout = null;}
+@model Common.DTOs.DTO_Employee
+
+@using (Html.BeginForm("AddEmployee", "Employee"))
+{
+    @Html.LabelFor(model => model.UserName, "Usuario")
+    <div class="input-group">
+        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light inputUserName" } })
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" id="checkUserButton" type="button" onclick="availableUser($('.inputUserName').val())">
+                <i id="checkUserIcon" class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+    @Html.LabelFor(model => model.Password, "Contraseña")
+    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.positionName, "Cargo en la Empresa")
+    @Html.DropDownListFor(model => model.positionName, (ICollection<SelectListItem>)ViewBag.Positions, "", new { @class = "input form-control bg-secondary text-light" })
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Surname, "Apellido")
+    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+
+    <button class="btn btn-primary mt-3" id="btn_Validar" type="submit" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux && $('#checkUserButton').hasClass('btn-outline-danger')) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else if ($('#checkUserButton').hasClass('btn-outline-success') && count == aux){
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+
+    function availableUser(UserName) {
+        var isAvailable = true;
+
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("checkUserName", "Employee")?UserName=" + UserName,
+            success: function(data) {
+                isAvailable = data;
+                if (isAvailable) {
+                    $('#checkUserButton').removeClass('btn-outline-info');
+                    $('#checkUserButton').removeClass('btn-outline-danger');
+                    $('#checkUserButton').addClass('btn-outline-success');
+                }
+                else if (!isAvailable) {
+                    $('#checkUserButton').removeClass('btn-outline-info');
+                    $('#checkUserButton').removeClass('btn-outline-success');
+                    $('#checkUserButton').addClass('btn-outline-danger');
+                }
+           },
+           error: function() {
+               alert('Error occured');
+           }
+        })
+
+    }
+</script>

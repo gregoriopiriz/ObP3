@@ -1,0 +1,270 @@
+﻿@{
+    List<Common.DTOs.DTO_Product> products = ViewBag.Products;
+
+
+
+}
+
+<div class="input-group mt-3">
+    <div class="input-group-prepend mx-auto mx-md-0 mb-3 mb-md-0">
+        <div class="input-group-text py-0">
+            <div class="d-flex align-items-center justify-content-center" style="margin-top:0.3em">
+                <div class="mx-3">
+                    <input type="radio" name="priceOrder" class="shadow" onchange="Radios()" id="RadioAscending" checked />
+                    <label for="RadioAscending">Menor a Mayor</label>
+                </div>
+                <div class="mx-3">
+                    <input type="radio" class="shadow" name="priceOrder" onchange="Radios()" id="RadioDescending" />
+                    <label for="RadioDescending">Mayor a Menor</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="text" id="searchInput" class="bg-dark text-light form-control shadow" onkeyup="Search()" placeholder="Buscar por descripción">
+</div>
+
+<ul class="nav nav-pills nav-fill my-3 mx-2 row flex-row flex-nowrap" style="overflow-x: auto;-ms-overflow-style: -ms-autohiding-scrollbar;">
+    <li class="nav-item my-1 mx-1">
+        <button class="btn btn-outline-info" onclick="CategoryFilterAll()">Todos</button>
+    </li>
+    @{
+        foreach (Common.DTOs.DTO_Category C in ViewBag.Categories)
+        {
+            <li class="nav-item my-1 mx-1">
+                <button class="btn btn-outline-info" onclick="CategoryFilter(this.id)" id="@C.ID">@C.Name</button>
+            </li>
+        }
+    }
+</ul>
+
+@* PRECIO MENOR A MAYOR *@
+
+<div class="container mt-4" style="display: none" id="Ascending">
+    <ul class="row" id="container" style="list-style-type: none; padding: 0; margin:0">
+        @{
+            foreach (Common.DTOs.DTO_Product P in products.OrderBy(o => o.Price.Price))
+            {
+                <li class="col-lg-3 col-md-4 mb-4 my-3 catFilter priceFilter @P.CategoryID" data-code="@P.Code" data-price="@P.Price.Price">
+                    <div class="card h-100 shadow">
+                        <img class="card-img-top mx-auto" src="@Url.Action("GetImageByProductCode","Shop", new { ProductCode = P.Code} )">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="card-title">
+                                        @P.Name
+                                    </h4>
+                                    <h6 class="Pdescription">@P.Description</h6>
+                                    <h5>$ @P.Price.Price</h5>
+                                    @{
+                                        if (int.Parse(Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }).ToString()) > 0)
+                                        {
+                                            <h6 class="text-success">¡Hay @Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }) disponibles!</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6 class="text-warning">Actualmente no hay stock.</h6>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-dark" style="margin-top: -1em">
+                            @{
+                                if (int.Parse(Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }).ToString()) > 0)
+                                {
+                                    <button id="@P.Code" data-name="@P.Name" data-stock="@Html.Action("GetStockByProductCode","Shop", new { ProductCode = P.Code} )" data-price="@P.Price.Price" onclick="openModal(this.id)" class="mt-2 shadow btn btn-block btn-outline-info">
+                                        <i class="fas fa-cart-plus mr-3"></i>
+                                        Agregar al Carrito
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a href="#" class="mt-2 disabled shadow btn btn-block btn-outline-info">
+                                        <i class="fas fa-cart-plus mr-3"></i>
+                                        Agregar al Carrito
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+@* PRECIO MAYOR A MENOR *@
+
+<div class="container mt-4" style="display: none" id="Descending">
+    <ul class="row" id="container" style="list-style-type: none; padding: 0; margin:0">
+        @{
+            foreach (Common.DTOs.DTO_Product P in products.OrderByDescending(o => o.Price.Price))
+            {
+                <li class="col-lg-3 col-md-4 mb-4 my-3 catFilter priceFilter @P.CategoryID" data-code="@P.Code" data-price="@P.Price.Price">
+                    <div class="card h-100 shadow">
+                        <img class="card-img-top mx-auto" src="@Url.Action("GetImageByProductCode","Shop", new { ProductCode = P.Code} )">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="card-title">
+                                        @P.Name
+                                    </h4>
+                                    <h6>@P.Description</h6>
+                                    <h5>$ @P.Price.Price</h5>
+                                    @{
+                                        if (int.Parse(Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }).ToString()) > 0)
+                                        {
+                                            <h6 class="text-success">¡Hay @Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }) disponibles!</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6 class="text-warning">Actualmente no hay stock disponible</h6>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-dark" style="margin-top: -1em">
+                            @{
+                                if (int.Parse(Html.Action("GetStockByProductCode", "Shop", new { ProductCode = P.Code }).ToString()) > 0)
+                                {
+                                    <button id="@P.Code" data-name="@P.Name" data-stock="@Html.Action("GetStockByProductCode","Shop", new { ProductCode = P.Code} )" data-price="@P.Price.Price" onclick="openModal(this.id)" class="mt-2 shadow btn btn-block btn-outline-info">
+                                        <i class="fas fa-cart-plus mr-3"></i>
+                                        Agregar al Carrito
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a href="#" class="mt-2 disabled shadow btn btn-block btn-outline-info">
+                                        <i class="fas fa-cart-plus mr-3"></i>
+                                        Agregar al Carrito
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <input type="text" id="ProductCode" class="form-control bg-dark text-light shadow" style="display: none" />
+                <input type="text" id="Name" class="form-control bg-dark text-light shadow" style="display: none" />
+                <input type="text" id="Price" class="form-control bg-dark text-light shadow" style="display: none" />
+                <label>
+                    Cantidad
+                </label>
+                <input type="number" id="Quantity" min="1" max="" class="form-control bg-dark text-light shadow" />
+                <button class="btn btn-outline-info btn-block mt-3" onclick="AddToShoppingCart()"><i class="fas fa-cart-plus mr-2"></i>Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/Vendor/Js")
+<script>
+    function openModal(ProductCode) {
+        $("#ProductCode").val(ProductCode);
+        $("#Name").val($(`#${ProductCode}`).data("name"));
+        $("#Price").val($(`#${ProductCode}`).data("price"));
+
+        var stock = $(`#${ProductCode}`).data("stock");
+
+        $("#Quantity").attr("max", stock);
+        $("#Modal").modal("show");
+    }
+
+    $('document').ready(function () {
+        if (localStorage.getItem('Cart') == null) {
+            localStorage.setItem('Cart', "[]");
+        }
+    })
+
+    function AddToShoppingCart() {
+
+        var ProductCode = $("#ProductCode").val();
+        var Quantity = $("#Quantity").val();
+        var Name = $("#Name").val();
+        var Price = $("#Price").val();
+
+        var Cart = JSON.parse(localStorage.getItem('Cart'));
+
+        var ToAddProduct = {};
+        ToAddProduct.ProductCode = ProductCode;
+        ToAddProduct.Quantity = Quantity;
+        ToAddProduct.Name = Name;
+        ToAddProduct.Price = Price;
+
+
+        Cart.push(JSON.stringify(ToAddProduct));
+
+        localStorage.setItem('Cart', JSON.stringify(Cart));
+
+        $("#Modal").modal('hide');
+        var Quantity = $("#Quantity").val("");
+    }
+
+    function priceFilter() {
+
+    }
+
+    function CategoryFilter(CName) {
+        $(".catFilter").each(function () {
+            $(this).hide();
+        })
+        CatName = "." + CName
+        $(CatName).each(function () {
+            console.info(CatName)
+            $(this).show();
+        })
+    }
+    function CategoryFilterAll() {
+        $(".catFilter").each(function () {
+            $(this).show();
+        })
+    }
+
+    function Search() {
+
+        var h6, filter, i, txtValue, card;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("container");
+        card = ul.getElementsByTagName('li');
+
+        for (i = 0; i < card.length; i++) {
+            h6 = card[i].getElementsByClassName("Pdescription")[0];
+            txtValue = h6.textContent || h6.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                card[i].style.display = "";
+            } else {
+                card[i].style.display = "none";
+            }
+        }
+    }
+    $('document').ready(function () { Radios() })
+
+    function Radios() {
+
+        var radioDescending, radioAscending;
+        radioDescending = $('#RadioDescending');
+        radioAscending = $('#RadioAscending');
+
+        if ($(radioDescending).prop('checked') == true) {
+            $('#Ascending').hide();
+            $('#Descending').show();
+        }
+        if ($(radioAscending).prop('checked') == true) {
+            $('#Descending').hide();
+            $('#Ascending').show();
+        }
+    }
+
+</script>

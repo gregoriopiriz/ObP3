@@ -1,0 +1,50 @@
+﻿
+
+
+@{ Layout = null;}
+@model Common.DTOs.DTO_Employee
+
+<style>
+    .hidden{
+        display:none;
+    }
+</style>
+
+@using (Html.BeginForm("EditEmployee", "Employee"))
+{
+
+    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @id="EditID", @class = "hidden" } })
+    @Html.LabelFor(model => model.UserName, "Usuario")
+    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @id="EditUserName",@class = "input2 form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Password, "Contraseña")
+    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id="EditPassword",@class = "input2 form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id="EditName",@class = "input2 form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Surname, "Apellido")
+    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @id="EditSurname",@class = "input2 form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.positionName, "Cargo en la Empresa")
+    @Html.DropDownListFor(model => model.positionName, (ICollection<SelectListItem>)ViewBag.Positions, "", new {@id="EditPosition", @class = "form-control bg-secondary text-light" })
+
+    <button class="btn btn-primary mt-3" id="btn_ValidarEdit" type="submit" disabled>Editar</button>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input2').keyup(function () {
+        var count = $('.input2').length;
+        var aux = 0;
+        $('.input2').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#btn_ValidarEdit').attr('disabled', true);
+        }
+        else {
+            $('#btn_ValidarEdit').removeAttr("disabled");
+        }
+    });
+</script>

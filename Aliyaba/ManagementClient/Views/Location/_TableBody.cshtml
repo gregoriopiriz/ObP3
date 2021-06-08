@@ -1,0 +1,36 @@
+﻿
+@{ Layout = null;}
+@model Common.DTOs.DTO_Location
+@{
+    foreach (Common.DTOs.DTO_Location L in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-username="@L.CustomerUsername" data-description="@L.Description"></div>
+    }
+    <table id="table" data-classes="table table-hover table-borderless"></table>
+
+    @Scripts.Render("~/Vendor/Js")
+
+    <script>
+        var dat = [];
+        $('.dataDiv').each(function () {
+            var dd = {}
+            dd.Description = $(this).data("description");
+            dd.CustomerUsername = $(this).data("username");
+            dat.push(dd)
+        })
+        $('#table').bootstrapTable({
+            pagination: true,
+            search: true,
+            columns: [{
+                field: 'CustomerUsername',
+                title: 'Nombre de Usuario'
+            }, {
+                field: 'Description',
+                title: 'Descripción'
+            },],
+            data: dat
+        })
+    </script>
+}
+@*@Url.Action("Delete", "Customer", new { Document = C.Document, DocumentTypeName = C.DocumentTypeName })
+    @Url.Action("Home", "Customer", new { ID = @C.UserName })*@

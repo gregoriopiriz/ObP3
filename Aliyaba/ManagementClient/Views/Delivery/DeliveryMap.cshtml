@@ -1,0 +1,339 @@
+﻿@{
+    Common.DTOs.DTO_Order O = new Common.DTOs.DTO_Order();
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+
+<div class="fixed-bottom px-5 py-3" id="confirmButtonContainer" style="display: none">
+    <a class="btn btn-block btn-info shadow-lg" id="finishDelivery" href="@Url.Action("SelectDelivery", "Delivery")">
+        <i class="fas fa-check mr-2"></i>
+        Finalizar Reparto
+    </a>
+</div>
+
+<div class="px-2 py-4 py-md-0 ">
+    <div id="map" class="rounded-lg shadow" style=" width: 100%; height: 85vh"></div>
+</div>
+@{
+    List<Common.DTOs.DTO_Order> Orders = ViewBag.orders;
+    foreach (Common.DTOs.DTO_Location L in ViewBag.Locations)
+    {
+        <div class="location" data-lat="@L.Latitude" data-lng="@L.Longitude" data-id="@L.ID" style="display: none;">
+            <div id="@L.ID">
+                <div class="text-center">
+                    <h6 class="text-muted">
+                        ID de Pedido
+                    </h6>
+                    <h6 class="text-dark">
+                        @Orders.FirstOrDefault(f => f.LocationID == L.ID).ID
+                    </h6>
+                </div>
+                <hr />
+                <div class="text-center">
+                    <h6 class="text-muted">
+                        Descripción de la ubicación
+                    </h6>
+                    <h6 class="text-dark">
+                        @L.Description
+                    </h6>
+                </div>
+                <hr />
+                <div>
+                    <button class="Delivered btn btn-outline-info btn-block" data-order="@Orders.FirstOrDefault(f => f.LocationID == L.ID).ID)" onclick="Delivered(@Orders.FirstOrDefault(f => f.LocationID == L.ID).ID), finalizar(@Orders.Count)">
+                        <i class="fas fa-clipboard-check mr-2"></i>Entregado
+                    </button>
+                    <div class="DeliveredIcon text-success text-center" style="font-size: 2rem; display: none;" data-order="@Orders.FirstOrDefault(f => f.LocationID == L.ID).ID)">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIpK0dcYd-9iTow_8lZkCpxqLqXht_9UA&callback=initMap&libraries=&v=weekly" defer></script>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+
+    var map;
+    var styles = [
+
+        {
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#242f3e"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#746855"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#242f3e"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.locality",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#d59563"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#d59563"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#263c3f"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#6b9a76"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#38414e"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#212a37"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#9ca5b3"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#746855"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#1f2835"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#f3d19c"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#2f3948"
+                }
+            ]
+        },
+        {
+            "featureType": "transit.station",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#d59563"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#17263c"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#515c6d"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#17263c"
+                }
+            ]
+        },
+        {
+            featureType: 'poi',
+            stylers: [{ visibility: 'off' }]
+        },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{ "visibility": "off" }]
+        }
+    ];
+
+    function initMap() {
+        var bounds = new google.maps.LatLngBounds();
+
+        var markers = [];
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+        $('document').ready(function () {
+            $('.location').each(function () {
+                var l = {};
+                l.lat = $(this).data('lat');
+                l.lng = $(this).data('lng');
+                l.id = $(this).data('id');
+                l.orderId = $(this).data('oID');
+                bounds.extend(l);
+                addMarker(l)
+            })
+            showMarkers()
+        })
+
+        var location = { lat: -34.908377, lng: -54.958371 };
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: location,
+            zoom: 16,
+            styles: styles,
+            disableDefaultUI: true
+        });
+        map.fitBounds(bounds);
+
+        function addMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+
+            var contentString = generateContent(location);
+
+            marker.addListener("click", function () {
+                infowindow.open(map, marker);
+            });
+
+            markers.push(marker);
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+        }
+
+        function generateContent(location) {
+            var JQID = "#" + location.id;
+            var content = $(JQID).html();
+            return content;
+        }
+
+
+    }
+
+    function Delivered(OrderID) {
+
+        $('.Delivered:button').hide();
+
+
+        $('.DeliveredIcon').show();
+        $('.DeliveredIcon').addClass("isDelivered");
+
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("DeliverOrder", "Order")?OrderID=" + OrderID,
+        })
+    }
+
+
+
+    function finalizar(OrdersQuantity) {
+        var aux = 0;
+        $('.DeliveredIcon').each(function () {
+            if ($(this).hasClass("isDelivered")) {
+                aux++
+            }
+        })
+        console.info(aux, OrdersQuantity * 2)
+        if (OrdersQuantity * 2 == aux) {
+            $('#confirmButtonContainer').show()
+        }
+    }
+
+</script>
+

@@ -1,0 +1,191 @@
+﻿<div class="container mt-4">
+    <a href="@Url.Action("Index", "Shop")" class="shadow btn btn-outline-info mr-3 mt-2"><i class="fas fa-search mr-2"></i>Seguí buscando Productos</a>
+    @{
+        if (Session["UserName"] == null)
+        {
+            <button onclick="openPayModal()" title='Para utilizar esta función deberás iniciar sesión' disabled class="shadow btn btn-outline-success mt-2 mx-auto mx-md-0"><i class="fas fa-cash-register mr-2"></i>Pagar</button>
+        }
+        else
+        {
+            <button onclick="openPayModal()" class="shadow btn btn-outline-success mt-2 mx-auto mx-md-0"><i class="fas fa-cash-register mr-2"></i>Pagar</button>
+        }
+
+
+    }
+    <div class="row" id="InCartProducts">
+
+    </div>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-check d-flex align-content-center">
+                    <div class="mr-3">
+                        <input class="form-check-input" type="checkbox" style="width: 1rem; height: 1rem" name="DeliveryType" id="isExpress" value="1">
+                    </div>
+                    <label class="form-check-label" style="font-size: 1.4rem;" for="isExpress">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Envío Express (U$S 10)
+                    </label>
+                </div>
+                <div class="list-group mt-3 border-top border-secondary list-group-flush">
+                    <div class="list-group-item list-group-item-action bg-dark">
+                        <h4>
+                            Total a pagar
+                        </h4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fas fa-money-bill-wave mr-1" style="width: 30px; font-size: 1rem;"></i> $</span>
+                            </div>
+                            <input type="number" id="Total" class="form-control bg-dark shadow text-light" readonly disabled>
+                        </div>
+                    </div>
+                    <div class="list-group-item list-group-item-action bg-dark">
+                        <label>Dirección de envío</label>
+                        <select class="form-control shadow bg-dark text-light" id="Location">
+                            @{
+                                foreach (Common.DTOs.DTO_Location L in ViewBag.Locations)
+                                {
+                                    <option value="@L.ID">
+                                        @L.Description
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <button onclick="AddOrder()" class="btn btn-outline-info btn-block mt-3">Proceder <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/Vendor/Js")
+<script>
+    function openPayModal() {
+        var Total = 0;
+        var Cart = JSON.parse(localStorage.getItem('Cart'));
+        Cart.forEach(e => {
+            e = JSON.parse(e)
+            Total = Total + (parseFloat(e.Price) * parseFloat(e.Quantity));
+        })
+        $("#Total").val(Total);
+        $("#Modal").modal("show");
+    }
+    $('#isExpress').on('change', function () {
+        if ($("#isExpress").prop("checked")) {
+            var Total = $("#Total").val();
+            $("#Total").val(parseFloat(Total) + 10);
+        } else {
+            var Total = $("#Total").val();
+            $("#Total").val(parseFloat(Total) - 10);
+        }
+    })
+
+    function AddOrder() {
+        var isExpress = $("#isExpress").prop("checked");
+        var Total = $("#Total").val();
+        var LocationID = $("#Location").val();
+
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("AddOrder", "ShoppingCart")?isExpress=" + isExpress + "&Total=" + Total + "&LocationID=" + LocationID,
+            success: function (data) {
+
+            },
+            error: function (request, status, error) {
+                var Cart = JSON.parse(localStorage.getItem('Cart'));
+                Cart.forEach(e => {
+                    e = JSON.parse(e)
+                    $.ajax({
+                        dataType: "json",
+                        url: "@Url.Action("AddOrderDetail", "ShoppingCart")?Quantity=" + e.Quantity + "&ProductCode=" + e.ProductCode,
+                    });
+                })
+                localStorage.setItem("Cart","[]");
+                location.reload()
+            }
+        });
+
+    }
+    $('document').ready(function () {
+        var Cart = JSON.parse(localStorage.getItem('Cart'));
+        if (Cart.length == 0) {
+            $('#payButton').prop('disabled', true)
+        }
+        Cart.forEach(e => {
+            e = JSON.parse(e)
+            $("#InCartProducts").append(
+                `<div class="col-lg-3 col-md-4 mb-4 my-3">
+                    <div class="card h-100 shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="card-title">
+                                        ${e.Name}
+                                    </h4>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <h6 class="text-muted">
+                                                Cantidad
+                                            </h6>
+                                            <h6>
+                                                ${e.Quantity}
+                                            </h6>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="text-muted">
+                                                Precio Unitario
+                                            </h6>
+                                            <h6>
+                                                ${e.Price}
+                                            </h6>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="text-muted">
+                                                Precio Total
+                                            </h6>
+                                            <h6>
+                                                ${e.Price * e.Quantity}
+                                            </h6>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button id="" onclick="RemoveFromShoppingCart(${e.ProductCode})" title="Eliminar" class="mt-2 remove shadow btn btn-block btn-outline-danger">
+                                <i class="fas fa-trash mr-3"></i>
+                                Quitar del Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>`
+            )
+        })
+
+    })
+
+    function RemoveFromShoppingCart(ProductCode) {
+        var Cart = JSON.parse(localStorage.getItem('Cart'));
+
+        var ToRemoveIndex;
+
+        Cart.forEach(function (e, index) {
+            e = JSON.parse(e)
+            if (e.ProductCode == ProductCode) {
+                ToRemoveIndex = index;
+            }
+        })
+
+        Cart.splice(ToRemoveIndex);
+
+        localStorage.setItem('Cart', JSON.stringify(Cart));
+        location.reload();
+    }
+
+
+
+</script>

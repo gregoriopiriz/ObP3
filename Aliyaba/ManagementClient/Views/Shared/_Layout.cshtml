@@ -1,0 +1,112 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Vendor/Css")
+    @Styles.Render("~/Content/SideBar.css")
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-dark border-right border-dark shadow" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center"><h4>@Session["UserName"].ToString().ToUpper()</h4></div>
+            <p class="text-muted text-center" style="margin-top: -1rem">@Session["UserPosition"].ToString().ToUpper()</p>
+            @{
+                if (Session["UserPosition"].ToString() == "administrador")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("Index", "Order")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-boxes mr-1" style="width: 30px; font-size: 1.5rem"></i> Pedidos</a></li>
+                        <li><a href="@Url.Action("Index", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck mr-1" style="width: 30px; font-size: 1.5rem"></i> Repartos</a></li>
+                        <li><a href="@Url.Action("Home", "Customer")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-users mr-1" style="width: 30px; font-size: 1.5rem"></i> Clientes</a></li>
+                        <li><a href="@Url.Action("Home", "Location")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-map-marker-alt ml-1" style="width: 30px; font-size: 1.5rem"></i> Ubicaciones</a></li>
+                        <li><a href="@Url.Action("Index", "Employee")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-people-carry mr-1" style="width: 30px; font-size: 1.5rem"></i> Empleados</a></li>
+                        <li><a href="@Url.Action("Home", "Product")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-box mr-1" style="width: 30px; font-size: 1.5rem"></i> Productos</a></li>
+                        <li><a href="@Url.Action("Home", "Category")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-filter   mr-1" style="width: 30px; font-size: 1.5rem"></i> Categorías</a></li>
+                        <li><a href="@Url.Action("Index", "Image")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-images mr-1" style="width: 30px; font-size: 1.5rem"></i> Imágenes</a></li>
+                        <li><a href="@Url.Action("Index", "Stock")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-clipboard-list ml-1" style="width: 30px; font-size: 1.5rem"></i> Stocks</a></li>
+                        <li><a href="@Url.Action("Home", "Price")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-tags mr-1" style="width: 30px; font-size: 1.5rem"></i> Precios</a></li>
+                        <li><a href="@Url.Action("Index", "Reports")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-chart-bar mr-1" style="width: 30px; font-size: 1.5rem"></i> Reportes</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+                else if (Session["UserPosition"].ToString() == "gerente")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("Index", "Order")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-boxes mr-1" style="width: 30px; font-size: 1.5rem"></i> Pedidos</a></li>
+                        <li><a href="@Url.Action("Index", "OrdersPrepare")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-box-open mr-1" style="width: 30px; font-size: 1.5rem"></i> Preparar Pedido</a></li>
+                        <li><a href="@Url.Action("Index", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck mr-1" style="width: 30px; font-size: 1.5rem"></i> Repartos</a></li>
+                        <li><a href="@Url.Action("Prepare", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck-loading mr-1" style="width: 30px; font-size: 1.5rem"></i> Preparar Reparto</a></li>
+                        <li><a href="@Url.Action("SelectDelivery", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck-moving mr-1" style="width: 30px; font-size: 1.5rem"></i> Iniciar Reparto</a></li>
+                        <li><a href="@Url.Action("Home", "Customer")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-users mr-1" style="width: 30px; font-size: 1.5rem"></i> Clientes</a></li>
+                        <li><a href="@Url.Action("Home", "Location")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-map-marker-alt ml-1" style="width: 30px; font-size: 1.5rem"></i> Ubicaciones</a></li>
+                        <li><a href="@Url.Action("Home", "Product")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-box mr-1" style="width: 30px; font-size: 1.5rem"></i> Productos</a></li>
+                        <li><a href="@Url.Action("Home", "Category")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-filter   mr-1" style="width: 30px; font-size: 1.5rem"></i> Categorías</a></li>
+                        <li><a href="@Url.Action("Index", "Image")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-images mr-1" style="width: 30px; font-size: 1.5rem"></i> Imágenes</a></li>
+                        <li><a href="@Url.Action("Index", "Stock")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-clipboard-list ml-1" style="width: 30px; font-size: 1.5rem"></i> Stocks</a></li>
+                        <li><a href="@Url.Action("Home", "Price")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-tags mr-1" style="width: 30px; font-size: 1.5rem"></i> Precios</a></li>
+                        <li><a href="@Url.Action("Index", "Reports")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-chart-bar mr-1" style="width: 30px; font-size: 1.5rem"></i> Reportes</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+                else if (Session["UserPosition"].ToString() == "empaquetador")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("Index", "OrdersPrepare")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-box-open mr-1" style="width: 30px; font-size: 1.5rem"></i> Preparar Pedido</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+                else if (Session["UserPosition"].ToString() == "reponedor")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("Home", "Stocks")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-clipboard-list ml-1" style="width: 30px; font-size: 1.5rem"></i> Stocks</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+                else if (Session["UserPosition"].ToString() == "repartidor")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("SelectDelivery", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck-moving mr-1" style="width: 30px; font-size: 1.5rem"></i>Seleccionar Reparto</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+                else if (Session["UserPosition"].ToString() == "preparador")
+                {
+                    <ul class="list-group mt-3 border-top border-secondary list-group-flush">
+                        <li><a href="@Url.Action("Prepare", "Delivery")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-truck mr-1" style="width: 30px; font-size: 1.5rem"></i> Repartos</a></li>
+                        <li><a href="@Url.Action("LogOut", "Dashboard")" class="list-group-item list-group-item-action bg-dark" style="border: none"><i class="fas fa-sign-out-alt mr-1" style="width: 30px; font-size: 1.5rem"></i> Cerrar Sesión</a></li>
+                    </ul>
+                }
+            }
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow border-bottom border-dark">
+                <button class="btn" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+            </nav>
+
+            <div class="container-fluid p-md-5">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    @Scripts.Render("~/Vendor/Js")
+    <script src="https://kit.fontawesome.com/e39886f78e.js" crossorigin="anonymous"></script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿@{ Layout = null; }
+@model Common.DTOs.DTO_Stock
+@{
+    foreach (Common.DTOs.DTO_Stock S in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-productcode="@S.ProductCode" data-location="@S.Location" data-quantity="@S.Quantity" data-reason="@S.Reason" data-date="@S.Date"></div>
+    }
+}
+
+<button class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#AddModal">
+    <i class="fas fa-plus mt-2"></i> Agregar Stock
+</button>
+
+<table id="table" data-classes="table table-hover table-borderless"></table>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.ProductCode = $(this).data("productcode");
+        dd.Location = $(this).data("location");
+        dd.Quantity = $(this).data("quantity");
+        dd.Reason = $(this).data("reason");
+        dd.Date = $(this).data("date");
+        dat.push(dd)
+    })
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [{
+            field: 'ProductCode',
+            title: 'Codigo del Producto'
+        }, {
+            field: 'Location',
+            title: 'Ubicacion'
+        }, {
+            field: 'Quantity',
+            title: 'Cantidad'
+        }, {
+            field: 'Reason',
+            title: 'Razon'
+        }, {
+            field: 'Date',
+            title: 'Fecha'
+        }],
+        data: dat
+    })
+</script>

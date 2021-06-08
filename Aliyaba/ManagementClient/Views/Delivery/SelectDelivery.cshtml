@@ -1,0 +1,96 @@
+﻿<div class="container mt-4">
+    <div class="fixed-bottom px-5 py-3" id="confirmButtonContainer">
+        <button class="btn btn-block btn-info shadow-lg" id="confirmButton" data-toggle="modal" data-target="#vehiclePlateModal">
+            <i class="fas fa-truck-loading mr-2"></i>
+            Comenzar Reparto
+        </button>
+    </div>
+    <div class="row mb-5">
+        @{
+            if (ViewBag.DeliveriesCount > 0)
+            {
+                foreach (Common.DTOs.DTO_Delivery D in ViewBag.Deliveries)
+                {
+                    <div class="col-lg-12 col-md-12 mb-2 my-3 OrderCard">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <div class="d-flex flex-column flex-md-row justify-content-between border-secondary mt-2 mb-2">
+                                    <div class="d-flex flex-row mx-auto mx-md-0">
+                                        <h5 class="">ID de Reparto: </h5>
+                                        <h5 class="text-muted ml-2">
+                                            @D.ID
+                                        </h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column flex-md-row justify-content-between border-secondary mt-2 mb-2">
+                                    <h5 class="text-center">
+                                        Matrícula del Vehículo:
+                                    </h5>
+                                    <h5 class="text-muted text-center">
+                                        @D.VehiclePlate
+                                    </h5>
+                                </div>
+                               
+                                <div class="d-flex align-items-center justify-content-center justify-content-md-start mt-2">
+                                    <button class="btn btn-block btn-outline-info" onclick="startDelivery(@D.ID)">
+                                        Iniciar Reparto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="w-100">
+                    <h3 class="text-center">
+                        <i class="fas fa-check"></i>
+                    </h3>
+                </div>
+                <div class="w-100">
+                    <h3 class="text-center">
+                        No hay pedidos para repartir.
+                    </h3>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $("document").ready(function () {
+        $('#confirmButtonContainer').hide();
+        $('.order-check').on("change", function () {
+            if ($('.order-check:checked').length >= 1) {
+                $('#confirmButton').attr('disabled', false)
+                $('#confirmButtonContainer').show();
+            } else {
+                $('#confirmButton').attr('disabled', true)
+                $('#confirmButtonContainer').hide();
+            }
+        })
+
+        $('#vehiclePlateInput').on("change", function () {
+            if ($('#vehiclePlateInput').val() != "") {
+                $('#StartDeliveryButton').attr('disabled', false)
+            } else {
+                $('#StartDeliveryButton').attr('disabled', true)
+            }
+        })
+
+    })
+
+   function startDelivery(idD) {
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("StartDelivery","Delivery")?idD=" + idD,
+        })
+        $(window).attr('location','@Url.Action("DeliveryMap", "Delivery")')
+    }
+</script>

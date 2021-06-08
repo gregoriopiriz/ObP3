@@ -1,0 +1,35 @@
+﻿@{ Layout = null;}
+@model Common.DTOs.DTO_Category
+
+@using (Html.BeginForm("AddCategory", "Category"))
+{
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light" } })
+    <button class="btn btn-primary mt-3" id="btn_Validar" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = 0;
+        $('.input').each(function () {
+            if ($('.input').val().length > 0) {
+                count += 1
+            }
+        })
+
+        if (count == 0) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>

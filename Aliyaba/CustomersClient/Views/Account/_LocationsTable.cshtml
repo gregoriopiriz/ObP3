@@ -1,0 +1,59 @@
+﻿
+<table id="table" data-classes="table table-borderless table-hover"></table>
+
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a href="javascript:void(0)" title="Mostrar en el Mapa" data-toggle="modal" data-target="#ShowLocationModal" class="float-right show-map shadow btn btn-outline-info mr-2">',
+            '<i class="fas fa-map-marked-alt"></i>',
+            '</a>'
+        ].join('')
+    }
+    window.operateEvents = {
+        'click .show-map': function (e, value, row, index) {
+
+        },
+        'click .remove': function (e, value, row, index) {
+                $.ajax({
+                    dataType: "json",
+                    url: ",
+                    success(data) {
+                    }
+                })
+                location.reload();
+        }
+
+    }
+    $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "@Url.Action("GetLocationsByUser", "Account")",
+            success(data) {
+                GenerateTable(data)
+            }
+    });
+
+    function GenerateTable(data) {
+
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [
+        {
+            field: 'Description',
+            title: 'Descripción'
+        }, {
+            field: 'operate',
+            title: '',
+            clickToSelect: false,
+            events: window.operateEvents,
+            formatter: operateFormatter
+            }],
+        data: data
+    })
+    }
+</script>

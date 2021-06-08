@@ -1,0 +1,139 @@
+﻿@{ Layout = null; }
+@model Common.DTOs.DTO_Order
+@{
+    foreach (Common.DTOs.DTO_Order O in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-id="@O.ID" data-customerusername="@O.CustomerUsername" data-entrydate="@O.EntryDate" data-totalprice="$ @O.TotalPrice.ToString("0.00")"></div>
+
+        <div id="@O.ID" style="display: none">
+            <div class="row">
+                <div class="col-6">
+                    <table class="table table-borderless table-hover mx-auto w-75">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Producto
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (Common.DTOs.DTO_OrdersDetail OD in ViewBag.TableListDetails)
+                                {
+                                    if (OD.OrderID == O.ID)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @OD.ProductCode
+                                            </td>
+                                            <td>
+                                                @OD.Quantity
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless table-hover mx-auto w-75">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Fecha
+                                </th>
+                                <th>
+                                    Empleado
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (Common.DTOs.DTO_State S in ViewBag.TableListDetails2)
+                                {
+                                    if (S.OrderID == O.ID)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @S.Name
+                                            </td>
+                                            <td>
+                                                @S.Date
+                                            </td>
+                                            <td>
+                                                @S.EmployeeID
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+<table id="table"
+       data-detail-view="true"
+       data-classes="table table-hover table-borderless"
+       data-pagination="true"
+       data-detail-formatter="detailFormatter"
+       data-show-pagination-switch="true"
+       data-page-list="[10, 25, 50, 100, all]">
+</table>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.ID = $(this).data("id");
+        dd.CustomerUsername = $(this).data("customerusername");
+        dd.EntryDate = $(this).data("entrydate");
+        dd.States = $(this).data("state");
+        dd.TotalPrice = $(this).data("totalprice");
+        dat.push(dd)
+    })
+    var $table = $('#table')
+
+    function buildTable($el, cells, rows) {
+        var columns = [{
+            field: 'ID',
+            title: 'ID'
+        }, {
+            field: 'CustomerUsername',
+            title: 'Usuario del cliente'
+        }, {
+            field: 'EntryDate',
+            title: 'Fecha'
+        }, {
+            field: 'TotalPrice',
+            title: 'Precio Total'
+        }]
+        var data = dat
+
+        $el.bootstrapTable({
+            columns: columns,
+            data: data,
+            pagination: true,
+            search: true,
+        })
+    }
+    function detailFormatter(index, row) {
+        return $("#" + row.ID).html();
+    }
+
+    $(function () {
+        buildTable($table, 8, 1)
+    })
+
+</script>

@@ -1,0 +1,145 @@
+﻿<div class="container mt-4">
+    <div class="row">
+        @{
+            <div id="dataAux" data-odcount="@ViewBag.OrdersDetail.Count"></div>
+            foreach (Common.DTOs.DTO_OrdersDetail OD in ViewBag.OrdersDetail)
+            {
+                <div class="col mb-2 my-3 OrderCard OrderPrepareDetail" style="display: none">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="d-flex flex-row justify-content-between mt-2 mb-2 border-bottom border-secondary">
+                                <h5 class="">ID de Pedido: </h5>
+                                <h5 class="text-muted ml-2">
+                                    @OD.OrderID
+                                </h5>
+                            </div>
+                            <div>
+                                <div class="d-flex flex-row align-items-center justify-content-between mt-2 mb-2">
+                                    <h5 class="mb-0">
+                                        @Html.Action("GetProductNameToShowOrders", "OrdersPrepare", new { _Code = OD.ProductCode })
+                                    </h5>
+                                    <input type="checkbox" class="shadow product-check" style="width: 1rem; height:1rem">
+                                </div>
+
+                                <div class="card-body border-bottom border-secondary">
+                                    <div class="">
+                                        <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary">
+                                            <h6 class="">
+                                                Código:
+                                            </h6>
+                                            <h6 class="text-muted">
+                                                @OD.ProductCode
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            @{
+                                                foreach (Common.DTOs.DTO_OrderPrepareDetail OPD in ViewBag.OrdersPrepareDetail)
+                                                {
+                                                    if (OPD.ProductCode == OD.ProductCode)
+                                                    {
+                                                        <div class="my-1">
+                                                            <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary">
+                                                                <h6 class="">
+                                                                    Ubicación:
+                                                                </h6>
+                                                                <h6 class="text-muted">
+                                                                    @OPD.Location
+                                                                </h6>
+                                                            </div>
+                                                            <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary">
+                                                                <h6 class="">
+                                                                    Cantidad:
+                                                                </h6>
+                                                                <h6 class="text-muted">
+                                                                    @OPD.Quantity
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex flex-row justify-content-between mt-2 align-items-baseline border-secondary ">
+                                        <button class="btn btn-outline-info prevButton controls" onclick="previusProduct()">
+                                            <i class="fas fa-arrow-alt-circle-left ml-2"></i>
+                                            Anterior
+                                        </button>
+                                        <button class="btn btn-outline-info nextButton controls" onclick="nextProduct()">
+                                            Siguiente
+                                            <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-dark">
+                            <button class="btn btn-outline-info btn-block float-right confirmButton" onclick="finishPreparation(@OD.OrderID)" id="" disabled>
+                                <i class="fas fa-check mr-2"></i>
+                                Finalizar Preparación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+
+@Scripts.Render("~/Vendor/Js")
+
+
+<script>
+    var currIndex = 0;
+    var aux = $('.OrderPrepareDetail');
+    $("document").ready(function () {
+            console.info($(aux.length));
+        $(aux[currIndex]).show();
+        if (aux.length > 1) {
+            $('.controls').each(function () {
+                $(this).show();
+            })
+        } else {
+            $('.controls').each(function () {
+                $(this).hide();
+            })
+        }
+        $('.product-check').on("change", function () {
+            var count = 0;
+            $('.product-check').each(function () {
+                count += 1
+            })
+            if ($('.product-check:checked').length >= count) {
+                $('.confirmButton').each(function () {
+                $(this).attr('disabled', false)
+            })
+            } else {
+                $('.confirmButton').each(function () {
+                    $(this).attr('disabled', true)
+                })
+            }
+        })
+    })
+    function previusProduct() {
+            $(aux[currIndex]).show();
+$(aux[currIndex + 1]).hide();
+        currIndex - 1;
+    }
+    function nextProduct() {
+            $(aux[currIndex+1]).show();
+            $(aux[currIndex]).hide();
+        currIndex + 1;
+    }
+    function finishPreparation(ID) {
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("FinishPrepare","OrdersPrepare")?_OrderID=" + ID,
+            success(data) {
+            }
+        })
+        $(window).attr('location','@Url.Action("Index", "OrdersPrepare")')
+    }
+</script>

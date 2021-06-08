@@ -1,0 +1,90 @@
+﻿<div class="container mt-4">
+    <div class="row">
+        @{
+            foreach (Common.DTOs.DTO_Order O in ViewBag.Orders)
+            {
+                <div class="col-lg-4 col-md-4 mb-4 my-3">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary pb-2">
+                                                <h5>Estado:</h5>
+                                                @{
+                                                    if (@O.States.FirstOrDefault().Name == "Cancelado")
+                                                    {
+                                                        <h6 class="text-danger">
+                                                            @O.States.FirstOrDefault().Name
+                                                        </h6>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h6 class="text-muted">
+                                                            @O.States.FirstOrDefault().Name
+                                                        </h6>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="border-bottom border-secondary">
+                                                @{
+                                                    foreach (Common.DTOs.DTO_State S in O.States.OrderBy(o => o.Date))
+                                                    {
+                                                        <div>
+                                                            <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary">
+                                                                <h6 class="text-muted">
+                                                                    @S.Name
+                                                                </h6>
+                                                                <h6 class="text-muted">
+                                                                    @S.Date
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                @{
+                                                    foreach (Common.DTOs.DTO_OrdersDetail OD in ViewBag.OrdersDetails)
+                                                    {
+                                                        if (OD.OrderID == O.ID)
+                                                        {
+                                                            string PC = OD.ProductCode;
+                                                            <li class="list-group-item">
+                                                                <h6>
+                                                                    <span class="text-muted">Producto: </span> @Html.Action("GetProductNameToShowOrders", "Account", new { _Code = PC })
+                                                                </h6>
+                                                                <h6>
+                                                                    <span class="text-muted">Cantidad: </span> @OD.Quantity
+                                                                </h6>
+                                                                <h6>
+                                                                    <span class="text-muted">Precio Unitario: </span> $ @Html.Action("GetProductPriceToShowOrders", "Account", new { _Code = PC })
+                                                                </h6>
+                                                            </li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                            <div class="d-flex flex-row border-top justify-content-between border-secondary pt-2">
+                                                <h5>Total:</h5>
+                                                <h5>$ @O.TotalPrice.ToString("N2")</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @{
+                                    if (O.States.FirstOrDefault().Name == "Pendiente"||O.States.FirstOrDefault().Name == "En Preparación" || O.States.FirstOrDefault().Name == "Listo para Entregar")
+                                    {
+                                        <div class="card-footer bg-dark">
+                                            <a href="@Url.Action("CancelOrder","Account", new {ID=O.ID})" title="Eliminar" class="mt-2 remove shadow btn btn-block btn-outline-danger">
+                                                <i class="fas fa-times mr-3"></i>
+                                                Cancelar Pedido
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                </div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,106 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "SignUp";
+}
+@model Common.DTOs.DTO_Customer
+@Styles.Render("~/Vendor/Css")
+
+@using (Html.BeginForm("Register", "Account"))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, "Nombre de Usuario")
+        <div class="input-group">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+            <div class="input-group-append">
+                <button class="btn btn-outline-info" id="checkUserButton" type="button" onclick="availableUser($('.inputUserName').val())">
+                    <i id="checkUserIcon" class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, "Contraseña")
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, "Nombre")
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Surname, "Apellido")
+        @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DocumentTypeName, "Tipo de Documento")
+        @Html.DropDownListFor(model => model.DocumentTypeName, (ICollection<SelectListItem>)ViewBag.DocumentTypes, "", new { @class = "input form-control bg-secondary text-light shadow" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Document, "Documento")
+        @Html.EditorFor(model => model.Document, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, "Correo Electrónico")
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, "Número de Teléfono")
+        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group d-flex justify-content-end">
+        <button type="submit" class=" btn btn-outline-primary shadow" id="btn_Validar" disabled>Registrarse</button>
+    </div>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Registrarse
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux && $('#checkUserButton').hasClass('btn-outline-danger')) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else if ($('#checkUserButton').hasClass('btn-outline-success') && count == aux){
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+
+    function availableUser(UserName) {
+        var isAvailable = true;
+
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("checkUserName", "Employee")?UserName=" + UserName,
+            success: function(data) {
+                isAvailable = data;
+                if (isAvailable) {
+                    $('#checkUserButton').removeClass('btn-outline-info');
+                    $('#checkUserButton').removeClass('btn-outline-danger');
+                    $('#checkUserButton').addClass('btn-outline-success');
+                }
+                else if (!isAvailable) {
+                    $('#checkUserButton').removeClass('btn-outline-info');
+                    $('#checkUserButton').removeClass('btn-outline-success');
+                    $('#checkUserButton').addClass('btn-outline-danger');
+                }
+           },
+           error: function() {
+               alert('Error occured');
+           }
+        })
+
+    }
+</script>

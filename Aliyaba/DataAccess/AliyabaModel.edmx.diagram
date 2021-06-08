@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b78343dfcb864931ba4a75260ee3baa4" Name="Diagram1">
+        <EntityTypeShape EntityType="AliyabaModel.Category" Width="1.5" PointX="11.625" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Customer" Width="1.5" PointX="5.125" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Delivery" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.DocumentType" Width="1.5" PointX="7.375" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Employee" Width="1.5" PointX="3.125" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Location" Width="1.5" PointX="3.125" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Order" Width="1.5" PointX="5.375" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.OrdersDetail" Width="1.5" PointX="7.625" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Photo" Width="1.5" PointX="9.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Position" Width="1.5" PointX="5.375" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Price" Width="1.5" PointX="11.625" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Product" Width="1.5" PointX="9.625" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.State" Width="1.5" PointX="3.125" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AliyabaModel.Stock" Width="1.5" PointX="11.625" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="AliyabaModel.FK_Products_Categorys" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Customers_DocumentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Locations_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Orders_Cutomers" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Deliveries_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Employees_Positions" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_States_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Orders_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_OrderDetails_Orders" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="AliyabaModel.FK_OrderDetails_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Photos_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Prices_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_Stocks_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="AliyabaModel.FK_States_Orders" />
+        <EntityTypeShape EntityType="AliyabaModel.sysdiagram" Width="1.5" PointX="12" PointY="1.875" />
+        <AssociationConnector Association="AliyabaModel.FK_Orders_Delivery" ></AssociationConnector>
+        <EntityTypeShape EntityType="AliyabaModel.ReservedStock" Width="1.5" PointX="9.5" PointY="11.5" />
+        <AssociationConnector Association="AliyabaModel.FK_ReservedStocks_Orders" />
+        <AssociationConnector Association="AliyabaModel.FK_ReservedStocks_Stocks" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,253 @@
+﻿@{
+    Layout = null;
+}
+@model Common.DTOs.DTO_Location
+
+@using (Html.BeginForm("AddLocation", "Account"))
+{
+    <div style="display: none;">
+        @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "hide form-control bg-secondary text-light shadow", @id = "latitude" } })
+        @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "hide form-control bg-secondary text-light shadow", @id = "longitude" } })
+    </div>
+    <div id="map" style="width: 100%; height: 300px;" class=" my-3 mx-auto shadow rounded border border-dark"></div>
+    <div style="display: none;">
+        @Html.EditorFor(model => model.CustomerUsername, new { htmlAttributes = new { @class = "hide form-control bg-secondary text-light shadow", @id = "CustomerUsername" } })
+    </div>
+    @Html.LabelFor(model => model.Description, "Descripción")
+    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light shadow" } })
+    <button class="btn btn-primary mt-3" type="submit" id="btn_Validar" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIpK0dcYd-9iTow_8lZkCpxqLqXht_9UA&callback=initMap2&libraries=&v=weekly" defer></script>
+<script>
+    $('.input').keyup(function () {
+            var count = $('.input').length;
+            var aux = 0;
+            $('.input').each(function () {
+                if ($(this).val().length > 0) {
+                    aux += 1
+                }
+            })
+
+        if (count != aux) {
+                $('#labelError').show();
+                $('#btn_Validar').attr('disabled', true);
+            }
+            else {
+                $('#labelError').hide();
+                $('#btn_Validar').removeAttr("disabled");
+            }
+        });
+    $("#CustomerUsername").val("@Session["UserName"].ToString()");
+        var map;
+        var styles = [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#242f3e"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#746855"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#242f3e"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.locality",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#d59563"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#d59563"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#263c3f"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#6b9a76"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#38414e"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#212a37"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9ca5b3"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#746855"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#1f2835"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#f3d19c"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#2f3948"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#d59563"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#17263c"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#515c6d"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#17263c"
+                    }
+                ]
+            },
+            {
+                featureType: 'poi',
+                stylers: [{ visibility: 'off' }]
+            },
+        ];
+
+        function initMap2() {
+            var location = { lat: -34.908377, lng: -54.958371 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: location,
+                zoom: 17,
+                styles: styles
+            });
+            map.addListener('click', function (e) {
+                placeMarkerAndPanTo(e.latLng, map);
+            })
+        }
+        var markers = [];
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+        function placeMarkerAndPanTo(latLng, map) {
+            deleteMarkers();
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+            $("#latitude").val(latLng.lat());
+            $("#longitude").val(latLng.lng());
+            markers.push(marker);
+            map.panTo(latLng);
+        }
+</script>

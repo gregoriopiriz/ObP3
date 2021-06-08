@@ -1,0 +1,108 @@
+﻿
+@{ Layout = null;}
+@model Common.DTOs.DTO_Employee
+@{
+    foreach (Common.DTOs.DTO_Employee E in ViewBag.TableList)
+    {
+        string position = E.positionName.ToUpper().Substring(0, 1) + E.positionName.Substring(1, E.positionName.Length - 1);
+        <div class="dataDiv" style="display: none" data-id="@E.ID" data-password="@E.Password" data-username="@E.UserName" data-name="@E.Name" data-surname="@E.Surname" data-position="@position"></div>
+    }
+}
+<button class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#AddModal">
+    <i class="fas fa-plus mt-2"></i> Agregar Empleado
+</button>
+
+<table id="table" data-classes="table table-hover table-borderless"></table>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Action("GetEditForm", "Employee")
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+        function operateFormatter(value, row, index) {
+            return [
+            '<a class="edit mr-3 btn btn-info text-ligth shadow" href="javascript:void(0)" title="Editar">',
+            '<i class="fa fa-pen"></i>',
+            '</a>',
+            '<a class="remove btn btn-danger text-ligth shadow" href="javascript:void(0)" title="Remove">',
+            '<i class="fa fa-trash"></i>',
+            '</a>'
+        ].join('')
+    }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            var r = confirm("Estas seguro que deseas eliminar a este empleado?");
+            if (r == true) {
+                $.ajax({
+                    url: "@Url.Action("Delete","Employee")?UserName=" + row.UserName,
+                    success() {
+                        location.reload();
+                    }
+                })
+            }
+        },
+        'click .edit': function (e, value, row, index) {
+
+            $('#EditID').val(row.ID);
+            $('#EditUserName').val(row.UserName);
+            $('#EditPassword').val(row.Password);
+            $('#EditName').val(row.Name);
+            $('#EditSurname').val(row.Surname);
+            $('#EditPosition').val(row.Position.toLowerCase());
+
+
+            $('#editModal').modal(); 
+        }
+    }
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.ID = $(this).data("id");
+        dd.UserName = $(this).data("username");
+        dd.Password = $(this).data("password");
+        dd.Name = $(this).data("name");
+        dd.Surname = $(this).data("surname");
+        dd.Position = $(this).data("position");
+        dat.push(dd)
+    })
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [{
+            field: 'UserName',
+            title: 'Usuario'
+        }, {
+            field: 'Name',
+            title: 'Nombre'
+        }, {
+            field: 'Surname',
+            title: 'Apellido'
+        }, {
+            field: 'Position',
+            title: 'Posicion'
+        },{
+          field: 'operate',
+          title: '',
+          align: 'right',
+          clickToSelect: false,
+          events: window.operateEvents,
+          formatter: operateFormatter
+        }],
+        data: dat
+    })
+</script>

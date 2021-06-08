@@ -1,0 +1,87 @@
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csprojAssemblyReference.cache
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll.config
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.pdb
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.pdb
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll.config
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.pdb
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll.config
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.xml
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CopyComplete
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.dll
+D:\Users\migue\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.pdb
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll.config
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.pdb
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.pdb
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll.config
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.pdb
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll.config
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.xml
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csprojAssemblyReference.cache
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CoreCompileInputs.cache
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CopyComplete
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.dll
+C:\Users\59894\Desktop\N A H U E L\PROGRAMACION\PROGRAMACION 2020\PROGRAM 3\OBLIGATORIO\REPO\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.pdb
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll.config
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.pdb
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.pdb
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll.config
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.pdb
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll.config
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.xml
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csprojAssemblyReference.cache
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CoreCompileInputs.cache
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CopyComplete
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.dll
+D:\Users\Gregorio\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.pdb
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll.config
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.pdb
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.pdb
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll.config
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.pdb
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll.config
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.xml
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csprojAssemblyReference.cache
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CopyComplete
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.dll
+D:\Users\grego\Desktop\Repos\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.pdb
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll.config
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\BussinesLogic.pdb
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.pdb
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\Common.dll.config
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.pdb
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\DataAccess.dll.config
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.xml
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csprojAssemblyReference.cache
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.csproj.CopyComplete
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.dll
+D:\Users\migue\Desktop\Repos\New folder (2)\ObligProg3\Aliyaba\BussinesLogic\obj\Debug\BussinesLogic.pdb

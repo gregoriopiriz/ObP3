@@ -1,0 +1,30 @@
+﻿@{
+    string AddFormTitle = ViewBag.AddFormTitle;
+    string CurrentController = ViewBag.CurrentController;
+}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-body">
+                @Html.Action("GetTableBody", CurrentController)
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@AddFormTitle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GetAddForm", CurrentController)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@{ Layout = null;}
+@model Common.DTOs.DTO_DocumentType
+@{
+    foreach (Common.DTOs.DTO_DocumentType DT in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-name="@DT.Name"></div>
+    }
+}
+
+<button class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#AddModal">
+    <i class="fas fa-plus mt-2"></i> Agregar tipo de Documento
+</button>
+
+<table id="table" data-classes="table table-hover table-borderless"></table>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.Name = $(this).data("name");
+        dat.push(dd)
+    })
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [{
+            field: 'Name',
+            title: 'Nombre'
+        }],
+        data: dat
+    })
+</script>

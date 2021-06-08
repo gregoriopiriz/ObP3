@@ -1,0 +1,35 @@
+﻿
+@model Common.DTOs.DTO_Product
+@using (Html.BeginForm("EditProduct", "Product"))
+{
+    @Html.LabelFor(model => model.Code, "Código")
+    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @readonly=true, @id="EditCode", @class = "input2 shadow form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id="EditName", @class = "input2 shadow form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.CategoryID, "Categoría")
+    @Html.DropDownListFor(model => model.CategoryID, (ICollection<SelectListItem>)ViewBag.SelectItems, "", new { @id="EditCategory", @class = "input2 form-control bg-secondary text-light" })
+    @Html.LabelFor(model => model.Description, "Descripcion")
+    @Html.TextAreaFor(model => model.Description, new { @id="EditDescrtiption", @class = "input2 shadow form-control bg-secondary text-light" })
+    <button type="submit" id="btn_Validar2" class="btn btn-primary mt-3" disabled>Editar</button>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input2').keyup(function () {
+        var count = $('.input2').length;
+        var aux = 0;
+        $('.input2').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+        
+        if (count != aux) {
+            $('#btn_Validar2').attr('disabled', true);
+        }
+        else {
+            $('#btn_Validar2').removeAttr("disabled");
+        }
+    });
+</script>

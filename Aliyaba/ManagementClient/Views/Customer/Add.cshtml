@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "AddCustomer";
+}
+
+@model Common.DTOs.DTO_Customer
+
+<hr class="border border-secondary mt-5" />
+
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Agregar un Cliente
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddCustomer", "Customer"))
+                {
+                    @Html.LabelFor(model => model.UserName, "Nombre de Usuario")
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.Name, "Nombre")
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.Surname, "Apellido")
+                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.Document, "Documento")
+                    @Html.EditorFor(model => model.Document, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.DocumentTypeName, "Tipo de Documento")
+                    @Html.EditorFor(model => model.DocumentTypeName, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.PhoneNumber, "Número de Teléfono")
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.Email, "Email")
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    @Html.LabelFor(model => model.Password, "Contraseña")
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+                    <button class="btn btn-primary mt-3">Agregar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

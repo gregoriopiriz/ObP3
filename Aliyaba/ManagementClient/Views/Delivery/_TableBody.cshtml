@@ -1,0 +1,103 @@
+﻿
+@{ Layout = null;}
+@model Common.DTOs.DTO_Delivery
+@{
+    foreach (Common.DTOs.DTO_Delivery D in ViewBag.TableList)
+    {
+        <div class="dataDiv" style="display: none" data-employee="@D.EmployeeID" data-id="@D.ID" data-vehicleplate="@D.VehiclePlate"></div>
+
+        <div id="@D.ID" style="display: none">
+            <table class="table table-borderless table-hover mx-auto w-75">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Precio Total
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Common.DTOs.DTO_Order O in ViewBag.TableListDetails)
+                        {
+                            if (O.DeliveryID == D.ID)
+                            {
+                                <tr>
+                                    <td>
+                                        @O.ID
+                                    </td>
+                                    <td>
+                                        @O.EntryDate
+                                    </td>
+                                    <td>
+                                        $ @O.TotalPrice
+                                    </td>
+                                    <td>
+                                        @Html.Action("GetCurrentStateNameByOrderID", "State", new {OrderID = O.ID}).ToString()
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    }
+}
+<table id="table"
+       data-detail-view="true"
+       data-classes="table table-hover table-borderless"
+       data-detail-formatter="detailFormatter"
+       data-pagination="true">
+</table>
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.Employee = $(this).data("employee");
+        dd.ID = $(this).data("id");
+        dd.VehiclePlate = $(this).data("vehicleplate");
+        dat.push(dd)
+    })
+    var $table = $('#table')
+
+    function buildTable($el, cells, rows) {
+        var columns = [{
+            field: 'ID',
+            title: 'ID'
+        }, {
+            field: 'Employee',
+            title: 'Empleado'
+        }, {
+            field: 'VehiclePlate',
+            title: 'Matrícula del vehículo'
+        }]
+
+        $el.bootstrapTable({
+            columns: columns,
+            data: dat,
+            pagination: true,
+            search: true,
+        })
+    }
+    function detailFormatter(index, row) {
+        return $("#" + row.ID).html();
+    }
+
+    $(function () {
+        buildTable($table, 8, 1)
+    })
+
+</script>

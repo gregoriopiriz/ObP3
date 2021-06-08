@@ -1,0 +1,40 @@
+﻿@model Common.DTOs.DTO_Product
+@using (Html.BeginForm("AddProduct", "Product"))
+{
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.Code, "Código")
+    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "input shadow form-control bg-secondary text-light" } })
+    @Html.LabelFor(model => model.CategoryID, "Categoría")
+    @Html.DropDownListFor(model => model.CategoryID, (ICollection<SelectListItem>)ViewBag.SelectItems, "", new { @class = "input form-control bg-secondary text-light" })
+    @Html.LabelFor(model => model.Description, "Descripcion")
+    @Html.TextAreaFor(model => model.Description, new { @class = "input shadow form-control bg-secondary text-light" })
+    <button type="submit" id="btn_Validar" class="btn btn-primary mt-3" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>

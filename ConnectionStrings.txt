@@ -1,0 +1,21 @@
+Alejandro
+  
+<connectionStrings>
+    <add name="AliyabaEntities"
+      connectionString="metadata=res://*/AliyabaModel.csdl|res://*/AliyabaModel.ssdl|res://*/AliyabaModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-9T8G437;initial catalog=Aliyaba;persist security info=True;user id=admin;password=th1gp3de;MultipleActiveResultSets=True;App=EntityFramework&quot;"
+      providerName="System.Data.EntityClient"/>
+ </connectionStrings>
+
+-------------------------------------------------------------------------------------------------------
+
+Enano
+
+<connectionStrings>
+    <add name="AliyabaEntities"
+      connectionString="metadata=res://*/AliyabaModel.csdl|res://*/AliyabaModel.ssdl|res://*/AliyabaModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=NAHUEL44;initial catalog=Aliyaba;persist security info=True;user id=en44no;password=0440;MultipleActiveResultSets=True;App=EntityFramework&quot;"
+      providerName="System.Data.EntityClient"/>
+  </connectionStrings>
+
+-------------------------------------------------------------------------------------------------------
+
+Gordo chupa pija

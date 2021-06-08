@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+@model Common.DTOs.DTO_SignIn
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+
+    <link href="@Url.Content("~/Vendor/Css/bootstrap.css")" rel="stylesheet" />
+
+</head>
+<body class="text-center">
+    <div class="d-flex w-100 h-100 align-items-center justify-content-center">
+        <div class="col-md-3 mt-5">
+            <div class="card">
+                <div class="card-body">
+
+                    @using (Html.BeginForm("","SignIn"))
+                    {
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <i class="input-group-text fas fa-user"></i>
+                            </div>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "shadow form-control bg-secondary text-light" } })
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <i class="input-group-text fas fa-key"></i>
+                            </div>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "shadow form-control bg-secondary text-light" } })
+                        </div>
+
+                        <button class="shadow btn btn-primary btn-block mt-3">Iniciar Sesión</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="@Url.Content("~/Vendor/Js/jquery-3.5.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Vendor/Js/bootstrap.js")" type="text/javascript"></script>
+    <script src="https://kit.fontawesome.com/e39886f78e.js" crossorigin="anonymous"></script>
+</body>

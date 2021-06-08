@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "SignIn";
+}
+@model Common.DTOs.DTO_LogIn
+@Styles.Render("~/Vendor/Css")
+
+@using (Html.BeginForm("LogIn", "Account"))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, "Nombre de Usuario")
+        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "shadow input2 form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, "Contraseña")
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "shadow input2 form-control bg-secondary text-light shadow" } })
+    </div>
+    <div class="form-group w-100">
+        <button type="submit" class=" btn btn-primary shadow float-md-right" id="btn_Validar2" disabled>Iniciar Sesión</button>
+    </div>
+    <br />
+    <i id="labelError2" class="text-danger hidden">
+        Debe completar todos los campos antes de Iniciar Sesión
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input2').keyup(function () {
+        var count = $('.input2').length;
+        var aux = 0;
+        $('.input2').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+             $('#labelError2').show();
+            $('#btn_Validar2').attr('disabled', true);
+        }
+        else {
+             $('#labelError2').hide();
+            $('#btn_Validar2').removeAttr("disabled");
+        }
+    });
+</script>

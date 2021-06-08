@@ -1,0 +1,5 @@
+CREATE TABLE SchemaName.TableName
+(
+    ID INT NOT NULL PRIMARY KEY,
+    Column1 [NVARCHAR](50) NOT NULL,
+);

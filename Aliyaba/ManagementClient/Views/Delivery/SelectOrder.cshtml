@@ -1,0 +1,182 @@
+﻿<div class="container mt-4">
+    <div class="fixed-bottom px-5 py-3" id="confirmButtonContainer">
+        <button class="btn btn-block btn-info shadow-lg" id="confirmButton" data-toggle="modal" data-target="#vehiclePlateModal">
+            <i class="fas fa-truck-loading mr-2"></i>
+            Preparar Reparto
+        </button>
+    </div>
+    <div class="row mb-5">
+        @{
+            if (ViewBag.OrdersCount > 0)
+            {
+                foreach (Common.DTOs.DTO_Order O in ViewBag.Orders)
+                {
+                    <div class="col-lg-12 col-md-12 mb-2 my-3 OrderCard">
+                        <div class="card shadow">
+                            <div class="card-body">
+
+                                <div class="d-flex flex-column flex-md-row justify-content-between border-secondary mt-2 mb-2">
+                                    <div class="d-flex flex-row mx-auto mx-md-0">
+                                        <h5 class="">ID de Pedido: </h5>
+                                        <h5 class="text-muted ml-2">
+                                            @O.ID
+                                        </h5>
+                                    </div>
+                                    @{
+                                        if (O.IsExpress)
+                                        {
+                                            <h5 class="text-center text-info mt-2 mt-md-0">
+                                                <i class="fas fa-rocket mr-2"></i>
+                                                Express
+                                            </h5>
+                                        }
+                                    }
+                                </div>
+                                <hr />
+                                <div class="d-flex flex-column flex-md-row justify-content-between border-secondary mt-2 mb-2">
+                                    <h5 class="text-center">
+                                        Fecha de Ingreso:
+                                    </h5>
+                                    <h5 class="text-muted text-center">
+                                        @O.EntryDate
+                                    </h5>
+                                </div>
+
+                                @{
+                                    float width = 100 - (float.Parse(O.TimeLeft) * 100 / 24);
+                                    string color = "";
+                                    if (O.IsExpress)
+                                    {
+                                        if (width < 33)
+                                        {
+                                            color = "success";
+                                        }
+                                        else if (width >= 33 && width < 66)
+                                        {
+                                            color = "warning";
+                                        }
+                                        else if (width >= 66)
+                                        {
+                                            color = "danger";
+                                        }
+
+
+                                        if (float.Parse(O.TimeLeft) == 0)
+                                        {
+                                            <h3 class="text-center text-danger pb-2">
+                                                <i class="fas fa-times mr-2"></i>
+                                                Fuera de Tiempo
+                                            </h3>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar bg-@color" role="progressbar" style="width: @width%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="d-flex flex-row justify-content-between align-items-baseline border-secondary mt-3">
+                                                <h5>
+                                                    Tiempo restante
+                                                </h5>
+                                                <h5 class="text-@color">
+                                                    @O.TimeLeft.Replace(".", ":")
+                                                </h5>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <hr />
+                                    }
+                                }
+                                <div class="d-flex align-items-center justify-content-center justify-content-md-start mt-2">
+                                    <input type="checkbox" class="OrderSelect order-check mr-2" id="@O.ID" style="width: 1.2rem; height: 1.2rem;" />
+                                    <label for="@O.ID" class="mt-2 text-center" style="font-size: 1.2rem;">Seleccionar para Envio</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="w-100">
+                    <h3 class="text-center">
+                        <i class="fas fa-check"></i>
+                    </h3>
+                </div>
+                <div class="w-100">
+                    <h3 class="text-center">
+                        No hay repartos para preparar.
+                    </h3>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="vehiclePlateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Matrícula del Vehículo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="vehiclePlateInput" class="bg-dark text-light form-control shadow" />
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-info shadow" onclick="startDelivery()" id="StartDeliveryButton">
+                        <i class="fas fa-truck-loading mr-2"></i>
+                        Comenzar Reparto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $("document").ready(function () {
+        $('#confirmButtonContainer').hide();
+        $('.order-check').on("change", function () {
+            if ($('.order-check:checked').length >= 1) {
+                $('#confirmButton').attr('disabled', false)
+                $('#confirmButtonContainer').show();
+            } else {
+                $('#confirmButton').attr('disabled', true)
+                $('#confirmButtonContainer').hide();
+            }
+        })
+
+        $('#vehiclePlateInput').on("change", function () {
+            if ($('#vehiclePlateInput').val() != "") {
+                $('#StartDeliveryButton').attr('disabled', false)
+            } else {
+                $('#StartDeliveryButton').attr('disabled', true)
+            }
+        })
+
+    })
+
+   function startDelivery() {
+        var VehiclePlate = $('#vehiclePlateInput').val();
+        var IDs = [];
+        $('.order-check:checked').each(function () {
+            IDs.push($(this).attr('id'));
+        })
+        console.log(IDs);
+        var SIDs = JSON.stringify(IDs);
+        $.ajax({
+            dataType: "json",
+            url: "@Url.Action("AddDelivery","Delivery")?_OrdersID=" + SIDs + "&VehiclePlate=" + VehiclePlate,
+        })
+       location.reload();
+    }
+</script>

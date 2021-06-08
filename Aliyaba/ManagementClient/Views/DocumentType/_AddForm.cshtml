@@ -1,0 +1,36 @@
+﻿@{ Layout = null;}
+@model Common.DTOs.DTO_DocumentType
+
+@using (Html.BeginForm("AddDocumentType", "DocumentType"))
+{
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input form-control bg-secondary shadow text-light" } })
+    <button class="btn btn-primary mt-3" id="btn_Validar" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#labelError').show();
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#labelError').hide();
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>

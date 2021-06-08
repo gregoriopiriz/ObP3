@@ -1,0 +1,34 @@
+﻿
+<form action="/Image/AddImage" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label for="PC">Código del Producto</label>
+        <input type="text" name="ProductCode" id="PC" class="input bg-secondary text-light form-control shadow" />
+    </div>
+    <div class="form-group">
+        <input type="file" name="upload" />
+    </div>
+    <button type="submit" id="btn_Validar" disabled class="btn btn-outline-info">
+        Agregar Imagen
+    </button>
+</form>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>

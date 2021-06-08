@@ -1,0 +1,10 @@
+﻿@{ Layout = null;}
+@model Common.DTOs.DTO_Category
+
+@using (Html.BeginForm("Update", "Category"))
+{
+    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control bg-secondary text-light", disabled = "disabled", @readonly = "readonly"} })
+    @Html.LabelFor(model => model.Name, "Nombre")
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control bg-secondary text-light" } })
+    <button class="btn btn-primary mt-3">Actualizar</button>
+}

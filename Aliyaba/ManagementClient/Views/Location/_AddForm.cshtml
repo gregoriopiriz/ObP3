@@ -1,0 +1,40 @@
+﻿
+@*@{ Layout = null;}
+@model Common.DTOs.DTO_Location
+
+@using (Html.BeginForm("AddLocation", "Location"))
+{
+    @Html.LabelFor(model => model.Latitude, "Latitud")
+    @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = " input form-control bg-secondary text-light shadow", @id = "latitude" } })
+    @Html.LabelFor(model => model.Longitude, "Longitud")
+    @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light shadow", @id = "longitude" } })
+    @Html.Action("GetMap", "Map")
+    @Html.LabelFor(model => model.CustomerUsername, "Usuario del Cliente")
+    @Html.EditorFor(model => model.CustomerUsername, new { htmlAttributes = new { @class = "input form-control bg-secondary text-light shadow" } })
+    <button class="btn btn-primary mt-3" type="submit" id="btn_Validar" disabled>Agregar</button>
+    <br />
+    <i id="labelError" class="text-danger hidden">
+        Debe completar todos los campos antes de Agregar
+    </i>
+}
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    $('.input').keyup(function () {
+        var count = $('.input').length;
+        var aux = 0;
+        $('.input').each(function () {
+            if ($(this).val().length > 0) {
+                aux += 1
+            }
+        })
+
+        if (count != aux) {
+            $('#btn_Validar').attr('disabled', true);
+        }
+        else {
+            $('#btn_Validar').removeAttr("disabled");
+        }
+    });
+</script>*@

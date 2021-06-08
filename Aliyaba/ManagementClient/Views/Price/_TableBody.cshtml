@@ -1,0 +1,42 @@
+﻿
+@{ Layout = null; }
+@model Common.DTOs.DTO_Price
+@{
+    foreach (Common.DTOs.DTO_Price P in ViewBag.TableList)
+    {
+    <div class="dataDiv" style="display: none" data-date="@P.Date" data-productcode="@P.ProductCode" data-price="@P.Price"></div>
+    }
+}
+<button class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#AddModal">
+    <i class="fas fa-plus mt-2"></i> Agregar Precio
+</button>
+
+<table id="table" data-classes="table table-hover table-borderless"></table>
+
+@Scripts.Render("~/Vendor/Js")
+
+<script>
+    var dat = [];
+    $('.dataDiv').each(function () {
+        var dd = {}
+        dd.Date = $(this).data("date");
+        dd.ProductCode = $(this).data("productcode");
+        dd.Price = $(this).data("price");
+        dat.push(dd)
+    })
+    $('#table').bootstrapTable({
+        pagination: true,
+        search: true,
+        columns: [ {
+            field: 'ProductCode',
+            title: 'Codigo de Producto'
+        },{
+            field: 'Date',
+            title: 'Fecha'
+        }, {
+            field: 'Price',
+            title: 'Precio'
+        }],
+        data: dat
+    })
+</script>
